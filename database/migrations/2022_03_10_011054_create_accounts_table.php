@@ -28,6 +28,7 @@ class CreateAccountsTable extends Migration
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
             $table->string('password');
+            $table->rememberToken();
             $table->timestamps();
         });
     }

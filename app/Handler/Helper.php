@@ -24,6 +24,10 @@ class Helper{
         return $this->responseJson(false, 400, $message, null);
       }
 
+      public function unauthorized($message){
+        return $this->responseJson(false, 401, $message, null);
+      }
+
       public function invalidation($message){
         return $this->responseJson(false, 400, $message, null);
       }

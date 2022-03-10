@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Account;
 use Validator;
 use Illuminate\Support\Facades\Hash;
+use JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
 
 class AccountController extends Controller
 {
@@ -18,6 +20,7 @@ class AccountController extends Controller
         }
         
         $newData = Account::create($data);
+
         return $this->response->success("Berhasil menambahkan akun baru", $newData);
     }
 
@@ -26,12 +29,26 @@ class AccountController extends Controller
         if ($account) {
             //Check Password
             if(Hash::check($request->password, $account->password)){
-                return $this->response->success("Berhasil masuk" ,$account);    
+                $credentials = $request->only('username', 'password');
+                try {
+                    if (! $token = JWTAuth::attempt($credentials)) {
+                        return $this->response->error('Invalid Credentials');
+                    }
+                } catch (JWTException $e) {
+                    return $this->response->error('Tidak dapat membuat token');
+                }
+                $account->token = $token;
+                return $this->response->success("Berhasil masuk" , $account);    
             }else{
                 return $this->response->error("Kata Sandi tidak sesuai");
             }   
         }
         return $this->response->error("Akun tidak ditemukan");
+    }
+
+    public function apiProfil(Request $request){
+        $user = auth()->user();
+        return $this->response->success("Berhasil mendapatkan profil", $user);
     }
     
 }
