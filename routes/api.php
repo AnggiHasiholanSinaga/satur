@@ -29,3 +29,8 @@ Route::group(['prefix' => 'position'], function() use ($router) {
     Route::get('/', [MasterPositionController::class, 'apiGetPosition']);
     Route::post('/', [MasterPositionController::class, 'apiNewPosition']);
 });
+
+Route::group(['prefix' => 'account'], function() use ($router) {
+    Route::post('/login', [AccountController::class, 'apiLogin']);
+    Route::post('/', [AccountController::class, 'apiNewAccount']);
+});
