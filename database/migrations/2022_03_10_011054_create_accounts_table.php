@@ -18,7 +18,15 @@ class CreateAccountsTable extends Migration
             $table->string('username')->unique();
             $table->string('name');
             $table->string('nip')->nullable()->default(null);
-            $table->integer('position_id');
+            // $table->unsignedBigInteger('position_id');
+            $table->foreignId('position_id')
+                ->constrained('master_positions')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+            $table->foreignId('division_id')
+                ->constrained('master_divisions')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
             $table->string('password');
             $table->timestamps();
         });

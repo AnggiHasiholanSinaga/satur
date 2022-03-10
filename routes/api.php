@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,4 +18,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::group(['prefix' => 'division'], function() use ($router) {
+    Route::get('/', [MasterDivisionController::class, 'apiGetDivision']);
+    Route::post('/', [MasterDivisionController::class, 'apiNewDivision']);
+});
+
+Route::group(['prefix' => 'position'], function() use ($router) {
+    Route::get('/', [MasterPositionController::class, 'apiGetPosition']);
+    Route::post('/', [MasterPositionController::class, 'apiNewPosition']);
 });
