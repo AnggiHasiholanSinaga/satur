@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Account;
-use Validator;
+use App\Models\MasterDivision as Division;
+use App\Models\MasterPosition as Position;
+use Validator, JWTAuth;
 use Illuminate\Support\Facades\Hash;
-use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 
 class AccountController extends Controller
@@ -48,7 +49,28 @@ class AccountController extends Controller
 
     public function apiProfil(Request $request){
         $user = auth()->user();
+
+        $division = Division::getDivision($user->division_id);
+        $user->division = $division->first();
+
+        $position = Position::getPosition($user->position_id);
+        $user->position = $position->first();
+
         return $this->response->success("Berhasil mendapatkan profil", $user);
+    }
+
+    public function apiGetKasi(Request $request){
+        $kasi = Account::with(['position','division'])->whereHas('position', function($q){
+            $q->where('code', 'Kasi');
+        })->get();
+        return $this->response->success("Berhasil mendapatkan daftar kasi", $kasi);
+    }
+
+    public function apiGetStaf(Request $request){
+        $data = Account::with(['position','division'])->whereHas('position', function($q){
+            $q->where('code', 'Staf');
+        })->get();
+        return $this->response->success("Berhasil mendapatkan daftar staf", $data);
     }
     
 }

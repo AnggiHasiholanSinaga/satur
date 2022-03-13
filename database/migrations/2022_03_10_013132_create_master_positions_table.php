@@ -15,6 +15,7 @@ class CreateMasterPositionsTable extends Migration
     {
         Schema::create('master_positions', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('code');
             $table->string('name');
             $table->timestamps();
         });

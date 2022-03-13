@@ -18,7 +18,7 @@ class MasterPositionController extends Controller
     }
 
     public function apiNewPosition(Request $request){
-        $data = $request->only('name');
+        $data = $request->only('code','name');
         $validation = Validator::make($data, Position::RULE, Position::RULE_MESSAGE);
         if($validation->fails()){
             return $this->response->invalidation($validation->errors()->first());

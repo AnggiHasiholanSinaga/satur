@@ -15,10 +15,13 @@ class Account extends Authenticatable implements JWTSubject
     protected $table = 'accounts';
 
     protected $hidden = [
+        'position_id',
+        'division_id',
         'password',
         'remember_token',
         'created_at',
-        'updated_at'
+        'updated_at',
+        'pivot'
     ];
 
     protected $fillable = [
@@ -56,6 +59,22 @@ class Account extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public function kasi() {
+        return $this->belongsToMany('App\Models\Inventory', 'inventory_kasi', 'account_id', 'inventory_id');
+    }
+
+    public function position() {
+        return $this->belongsTo('App\Models\MasterPosition');
+    }
+
+    public function division() {
+        return $this->belongsTo('App\Models\MasterDivision');
+    }
+
+    public function positiondivision(){
+        return $this->hasOneThrough(MasterPosition::class, MasterDivision::class,'position_id','division_id','id','id');
     }
 
 }

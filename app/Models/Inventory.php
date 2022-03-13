@@ -11,7 +11,7 @@ class Inventory extends Model
 
     protected $table = 'inventories';
 
-    protected $hidden = [];
+    protected $hidden = ['pivot'];
 
     protected $fillable = [
         'no_letter',
@@ -20,7 +20,16 @@ class Inventory extends Model
         'subject',
         'status',
         'letter_date',
-        'file'
+        'file',
+        'created_by',
+        'disposisi_to_kasi_by',
+        'disposisi_to_kasi_at',
+        'disposisi_to_staf_by',
+        'disposisi_to_staf_at',
+        'notulen',
+        'notulen_created_by',
+        'notulen_created_at',
+        'progress'
     ];
 
     const RULE = [
@@ -46,5 +55,30 @@ class Inventory extends Model
         'file.max' => 'ukuran file terlalu besar (max: 5mb)'
         
     ];
+
+    public function kasi() {
+        $kasi = $this->belongsToMany('App\Models\Account', 'inventory_kasi', 'inventory_id', 'account_id');
+        return $kasi;
+    }
+
+    public function staf() {
+        $staf = $this->belongsToMany('App\Models\Account', 'inventory_staf', 'inventory_id', 'account_id');
+        return $staf;
+    }
+
+    public function disposisi_to_kasi_by() {
+        $staf = $this->belongsTo('App\Models\Account', 'disposisi_to_kasi_by', 'id');
+        return $staf;
+    }
+
+    public function disposisi_to_staf_by() {
+        $staf = $this->belongsTo('App\Models\Account', 'disposisi_to_staf_by', 'id');
+        return $staf;
+    }
+
+    public function notulen_created_by() {
+        $staf = $this->belongsTo('App\Models\Account', 'created_notulen_by', 'id');
+        return $staf;
+    }
 
 }

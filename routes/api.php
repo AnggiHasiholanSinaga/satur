@@ -37,8 +37,15 @@ Route::group(['prefix' => 'account'], function() use ($router) {
 
 Route::group(['middleware' => 'jwt.verify', 'prefix' => 'account'], function(){
     Route::get('/profil', [AccountController::class, 'apiProfil']);
+    Route::get('/kasi', [AccountController::class, 'apiGetKasi']);
+    Route::get('/staf', [AccountController::class, 'apiGetStaf']);
 });
 
 Route::group(['middleware' => 'jwt.verify', 'prefix' => 'inventory'], function(){
     Route::post('/', [InventoryController::class, 'apiNewInventory']);
+    Route::get('/', [InventoryController::class, 'apiGetInventories']);
+    Route::get('/{id}', [InventoryController::class, 'apiGetInventory']);
+    Route::post('/dispo-kasi/{id}',[InventoryController::class, 'apiDispoToKasi']);
+    Route::post('/dispo-staf/{id}',[InventoryController::class, 'apiDispoToStaf']);
+    Route::post('/add-notulen/{id}',[InventoryController::class, 'apiAddNotulen']);
 });

@@ -20,8 +20,17 @@ class CreateInventoriesTable extends Migration
             $table->string('from');
             $table->string('subject');
             $table->string('status');
-            $table->date('letter_date');
+            $table->dateTime('letter_date');
             $table->string('file');
+            $table->bigInteger('created_by')->nullable();
+            $table->bigInteger('disposisi_to_kasi_by')->nullable();
+            $table->dateTime('disposisi_to_kasi_at')->nullable();
+            $table->bigInteger('disposisi_to_staf_by')->nullable();
+            $table->dateTime('disposisi_to_staf_at')->nullable();
+            $table->string('notulen')->nullable();
+            $table->bigInteger('notulen_created_by')->nullable();
+            $table->dateTime('notulen_created_at')->nullable();
+            $table->integer('progress');
             $table->timestamps();
         });
     }

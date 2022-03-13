@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class MasterDivision extends Model
 {
@@ -29,4 +30,9 @@ class MasterDivision extends Model
         'name.required' => 'nama tidak boleh kosong',
         'name.unique' => 'nama sudah digunakan',
     ];
+
+    public function getDivision($id){
+        $data = MasterDivision::where('id','=',$id)->get();
+        return $data;
+    }
 }
