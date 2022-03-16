@@ -7,11 +7,9 @@ class Helper{
 
     private function responseJson($success, $statusCode, $message, $result) {
         return array(
-          'status' => [
-            'success' => $success,
-            'code' => $statusCode,
-            'message' => $message
-          ],
+          'success' => $success,
+          'code' => $statusCode,
+          'message' => $message,
           'result' => $result
         );
       }
