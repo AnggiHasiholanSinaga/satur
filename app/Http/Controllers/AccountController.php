@@ -26,7 +26,7 @@ class AccountController extends Controller
     }
 
     public function apiLogin(Request $request){
-        $account = Account::where('username', $request->username)->first();
+        $account = Account::with('position','division')->where('username', $request->username)->first();
         if ($account) {
             //Check Password
             if(Hash::check($request->password, $account->password)){
