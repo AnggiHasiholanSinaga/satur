@@ -33,7 +33,7 @@ class Inventory extends Model
     ];
 
     const RULE = [
-        'no_letter' => 'required',
+        'no_letter' => 'required|unique:inventories',
         'no_agenda' => 'required',
         'from' => 'required',
         'subject' => 'required',
@@ -44,6 +44,7 @@ class Inventory extends Model
 
     const RULE_MESSAGE = [
         'no_letter.required' => 'nomer surat tidak boleh kosong',
+        'no_letter.unique' => 'nomer surat sudah tersedia',
         'no_agenda.required' => 'nomer agenda tidak boleh kosong',
         'from.required' => 'asal surat tidak boleh kosong',
         'subject.required' => 'perihal surat tidak boleh kosong',
