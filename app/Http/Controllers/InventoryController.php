@@ -120,5 +120,10 @@ class InventoryController extends Controller
         return $this->response->success("Berhasil mendapatkan daftar inventory", Inventory::get());
     }
 
+    public function apiGetInventoriesByProgress(Request $request){
+        $data = Inventory::where('progress', $request->progress)->orderBy('letter_date','desc')->get();
+        return $this->response->success("Berhasil mendapatkan daftar inventory", $data);
+    }
+
 
 }
