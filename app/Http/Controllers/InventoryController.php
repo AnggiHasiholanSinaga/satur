@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Inventory as Inventory;
+use App\Models\inventories_kasi as Kasi;
+use App\Models\inventory_staf as Staf;
+use App\Models\MasterPosition as MasterPosition;
 use Carbon\Carbon;
 use Validator;
 
@@ -41,44 +44,86 @@ class InventoryController extends Controller
         $inventory = Inventory::find($id);
 
         $user = auth()->user();
-        //Update data inventory, filled disposisi_to_kasi_by and disposisi_to_kasi_at
-        $inventory->update(
-            [
-                'disposisi_to_kasi_by' => $user->id,
-                'disposisi_to_kasi_at' => Carbon::now('UTC'),
-                'progress' => 2
-            ]
-        );
+
+        $kasiBefore = Kasi::where('inventory_id', $id)->get();
+        if(empty($kasiBefore)){
+            //Update data inventory, filled disposisi_to_kasi_by and disposisi_to_kasi_at
+            $inventory->update(
+                [
+                    'disposisi_to_kasi_by' => $user->id,
+                    'disposisi_to_kasi_at' => Carbon::now('UTC'),
+                    'progress' => 2
+                ]
+            );
+        }else{
+            Kasi::where('inventory_id', $id)->delete();
+            $inventory->update(
+                [
+                    'disposisi_to_kasi_by' => $user->id,
+                    'disposisi_to_kasi_at' => Carbon::now('UTC'),
+                ]
+            );
+        }
 
         foreach($request->kasi as $kasi){
             $inventory->kasi()->attach($kasi['id']);
         }
 
+
         return $this->response->success("Berhasil melakukan disposisi ke Kasi", 
-            Inventory::with(['kasi.position','kasi.division'])
-                ->find($id));
+            Inventory::with([
+                'disposisi_to_kasi_by.position',
+                'disposisi_to_kasi_by.division',
+                'disposisi_to_staf_by.position',
+                'disposisi_to_staf_by.division',
+                'notulen_created_by.position',
+                'notulen_created_by.division',
+                'kasi.position',
+                'kasi.division',
+                'staf.position',
+                'staf.division'])->find($id));
     }
 
     public function apiDispoToStaf($id, Request $request){
         $inventory = Inventory::find($id);
 
         $user = auth()->user();
-        //Update data inventory, filled disposisi_to_staf_by and disposisi_to_staf_at
-        $inventory->update(
-            [
-                'disposisi_to_staf_by' => $user->id,
-                'disposisi_to_staf_at' => Carbon::now('UTC'),
-                'progress' => 3
-            ]
-        );
+
+        $stafBefore = Kasi::where('inventory_id', $id)->get();
+        if(empty($stafBefore)){
+            $inventory->update(
+                [
+                    'disposisi_to_staf_by' => $user->id,
+                    'disposisi_to_staf_at' => Carbon::now('UTC'),
+                    'progress' => 3
+                ]
+            );
+        }else{
+            Staf::where('inventory_id', $id)->delete();
+            $inventory->update(
+                [
+                    'disposisi_to_staf_by' => $user->id,
+                    'disposisi_to_staf_at' => Carbon::now('UTC'),
+                ]
+            );
+        }
 
         foreach($request->staf as $staf){
             $inventory->staf()->attach($staf['id']);
         }
 
         return $this->response->success("Berhasil melakukan disposisi ke Staf", 
-            Inventory::with(['kasi.position','kasi.division','staf.position','staf.division'])
-                ->find($id));
+            Inventory::with([
+                'disposisi_to_kasi_by.position',
+                'disposisi_to_kasi_by.division',
+                'disposisi_to_staf_by.position',
+                'disposisi_to_staf_by.division',
+                'notulen_created_by.position',
+                'notulen_created_by.division',
+                'kasi.position',
+                'kasi.division',
+                'staf.position',
+                'staf.division'])->find($id));
     }
 
     public function apiAddNotulen($id, Request $request){
@@ -96,8 +141,17 @@ class InventoryController extends Controller
         );
 
         return $this->response->success("Berhasil menambahkan notulen", 
-            Inventory::with(['kasi.position','kasi.division','staf.position','staf.division'])
-                ->find($id));
+            Inventory::with([
+                'disposisi_to_kasi_by.position',
+                'disposisi_to_kasi_by.division',
+                'disposisi_to_staf_by.position',
+                'disposisi_to_staf_by.division',
+                'notulen_created_by.position',
+                'notulen_created_by.division',
+                'kasi.position',
+                'kasi.division',
+                'staf.position',
+                'staf.division'])->find($id));
     }
 
     public function apiGetInventory($id, Request $request){
@@ -117,12 +171,46 @@ class InventoryController extends Controller
     }
 
     public function apiGetInventories(Request $request){
-        return $this->response->success("Berhasil mendapatkan daftar inventory", Inventory::get());
+        return $this->response->success("Berhasil mendapatkan daftar inventory", Inventory::with([
+            'disposisi_to_kasi_by.position',
+            'disposisi_to_kasi_by.division',
+            'disposisi_to_staf_by.position',
+            'disposisi_to_staf_by.division',
+            'notulen_created_by.position',
+            'notulen_created_by.division',
+            'kasi.position',
+            'kasi.division',
+            'staf.position',
+            'staf.division'])->get());
     }
 
     public function apiGetInventoriesByProgress(Request $request){
-        $data = Inventory::where('progress', $request->progress)->orderBy('letter_date','desc')->get();
+        $data = Inventory::with([
+            'disposisi_to_kasi_by.position',
+            'disposisi_to_kasi_by.division',
+            'disposisi_to_staf_by.position',
+            'disposisi_to_staf_by.division',
+            'notulen_created_by.position',
+            'notulen_created_by.division',
+            'kasi.position',
+            'kasi.division',
+            'staf.position',
+            'staf.division'])->where('progress', $request->progress)->orderBy('letter_date','desc')->get();
         return $this->response->success("Berhasil mendapatkan daftar inventory", $data);
+    }
+
+    public function apiGetOwnInventory(Request $request){
+        $user = auth()->user();
+        
+        $position = MasterPosition::where('id', $user->position_id)->first();
+
+        if($position->code=='Kasi'){
+            $data = Kasi::with(['inventory'])->where('account_id',$user->id)->get();
+            return $this->response->success("Berhasil mendapatkan daftar inventory", $data);
+        }else if($position->code=='Staf'){
+            $data = Staf::with(['inventory'])->where('account_id',$user->id)->get();
+            return $this->response->success("Berhasil mendapatkan daftar inventory", $data);
+        }
     }
 
 

@@ -8,4 +8,18 @@ use Illuminate\Database\Eloquent\Model;
 class inventory_staf extends Model
 {
     use HasFactory;
+
+    protected $table = "inventory_staf";
+
+    protected $hidden = [
+        'created_at',
+        'updated_at'
+    ];
+
+    protected $fillable = [];
+
+    public function inventory() {
+        $data = $this->belongsTo('App\Models\Inventory', 'inventory_id', 'id');
+        return $data;
+    }
 }
