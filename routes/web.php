@@ -16,3 +16,31 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/privacy-policy', function () {
+    return view('privacypolicy');
+});
+
+//CLEAR CACHE
+Route::get('/clear-cache', function() {
+  Artisan::call('cache:clear');
+  return "Cache is cleared";
+});
+
+//CONFIG CACHE
+Route::get('/config-cache', function() {
+    Artisan::call('config:cache');
+    return "Config is cache";
+});
+
+//CONFIG CLEAR
+Route::get('/config-clear', function() {
+    Artisan::call('config:clear');
+    return "Config is CLEAR";
+});
+
+//SYMLINK
+Route::get('/symlink', function() {
+    Artisan::call('storage:link');
+    return "symlink OK";
+});
