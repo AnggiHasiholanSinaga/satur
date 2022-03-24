@@ -21,6 +21,9 @@ class CreateInventoriesTable extends Migration
             $table->string('subject');
             $table->string('status');
             $table->dateTime('letter_date');
+            $table->dateTime('implementation_date')->nullable();
+            $table->string('implementation_place')->nullable();
+            $table->string('implementation_note')->nullable();
             $table->string('file');
             $table->bigInteger('created_by')->nullable();
             $table->bigInteger('disposisi_to_kasi_by')->nullable();

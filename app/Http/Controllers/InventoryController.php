@@ -32,6 +32,9 @@ class InventoryController extends Controller
             $newData->subject = $request->subject;
             $newData->status = $request->status;
             $newData->letter_date = $request->letter_date;
+            $newData->implementation_date = $request->implementation_date;
+            $newData->implementation_place = $request->implementation_place;
+            $newData->implementation_note = $request->implementation_note;
             $newData->file = str_replace("public","storage",$file);
             $newData->progress = 1;
             $newData->created_by = $user->id;
