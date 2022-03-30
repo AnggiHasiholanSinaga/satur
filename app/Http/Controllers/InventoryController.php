@@ -49,7 +49,7 @@ class InventoryController extends Controller
         $user = auth()->user();
 
         $kasiBefore = Kasi::where('inventory_id', $id)->get();
-        if(empty($kasiBefore)){
+        if($kasiBefore->count()==0){
             //Update data inventory, filled disposisi_to_kasi_by and disposisi_to_kasi_at
             $inventory->update(
                 [
@@ -93,7 +93,7 @@ class InventoryController extends Controller
         $user = auth()->user();
 
         $stafBefore = Kasi::where('inventory_id', $id)->get();
-        if(empty($stafBefore)){
+        if($stafBefore->count()==0){
             $inventory->update(
                 [
                     'disposisi_to_staf_by' => $user->id,
