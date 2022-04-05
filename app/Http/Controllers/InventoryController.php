@@ -15,7 +15,7 @@ class InventoryController extends Controller
     public function apiNewInventory(Request $request){
         $user = auth()->user();
 
-        $data = $request->only('no_letter','no_agenda','from','subject','status','letter_date','file');
+        $data = $request->only('no_letter','from','subject','status','letter_date','file');
         $validation = Validator::make($data, Inventory::RULE, Inventory::RULE_MESSAGE);
         if($validation->fails()){
             return $this->response->invalidation($validation->errors()->first());
@@ -25,15 +25,23 @@ class InventoryController extends Controller
             //store file into document folder
             $file = $request->file->store('public/files');
 
+            $dateNow = Carbon::now('UTC')->toDateTimeString();
+            $inventory = Inventory::whereDate('created_at', Carbon::today())->get();
+            $inventoryCount = $inventory->count()+1;
+            $date = Carbon::parse($dateNow)->format('d/m/Y');
+            
+
             $newData = new Inventory();
             $newData->no_letter = $request->no_letter;
-            $newData->no_agenda = $request->no_agenda;
+            $newData->no_agenda = "$inventoryCount/$date";
             $newData->from = $request->from;
             $newData->subject = $request->subject;
+            $newData->type = $request->type;
             $newData->status = $request->status;
             $newData->letter_date = $request->letter_date;
             $newData->implementation_date = $request->implementation_date;
             $newData->implementation_place = $request->implementation_place;
+            $newData->implementation_value = $request->implementation_value;
             $newData->implementation_note = $request->implementation_note;
             $newData->file = str_replace("public","storage",$file);
             $newData->progress = 1;

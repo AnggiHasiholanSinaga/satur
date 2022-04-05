@@ -18,15 +18,19 @@ class Inventory extends Model
         'no_agenda',
         'from',
         'subject',
+        'type',
         'status',
         'letter_date',
         'implementation_date',
         'implementation_place',
+        'implementation_value',
         'implementation_note',
         'file',
         'created_by',
+        'disposisi_to_kasi_note',
         'disposisi_to_kasi_by',
         'disposisi_to_kasi_at',
+        'disposisi_to_staf_note',
         'disposisi_to_staf_by',
         'disposisi_to_staf_at',
         'notulen',
@@ -36,8 +40,7 @@ class Inventory extends Model
     ];
 
     const RULE = [
-        'no_letter' => 'required|unique:inventories',
-        'no_agenda' => 'required',
+        // 'no_letter' => 'unique:inventories',
         'from' => 'required',
         'subject' => 'required',
         'status' => 'required',
@@ -46,9 +49,7 @@ class Inventory extends Model
     ];
 
     const RULE_MESSAGE = [
-        'no_letter.required' => 'nomer surat tidak boleh kosong',
         'no_letter.unique' => 'nomer surat sudah tersedia',
-        'no_agenda.required' => 'nomer agenda tidak boleh kosong',
         'from.required' => 'asal surat tidak boleh kosong',
         'subject.required' => 'perihal surat tidak boleh kosong',
         'status.required' => 'status surat tidak boleh kosong',
@@ -57,7 +58,6 @@ class Inventory extends Model
         'file.required' => 'file surat tidak boleh kosong',
         'file.mimes' => 'file surat tidak sesuai',
         'file.max' => 'ukuran file terlalu besar (max: 5mb)'
-        
     ];
 
     public function kasi() {
