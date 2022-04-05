@@ -206,7 +206,7 @@ class InventoryController extends Controller
             'kasi.position',
             'kasi.division',
             'staf.position',
-            'staf.division'])->where('progress', $request->progress)->orderBy('letter_date','desc')->get();
+            'staf.division'])->where('progress', $request->progress)->orderBy('created_at','desc')->get();
         return $this->response->success("Berhasil mendapatkan daftar inventory", $data);
     }
 
