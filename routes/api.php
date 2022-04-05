@@ -35,6 +35,8 @@ Route::group(['prefix' => 'account'], function() use ($router) {
     Route::post('/', [AccountController::class, 'apiNewAccount']);
 });
 
+Route::get('/detail/{id}', [InventoryController::class, 'apiGetInventory']);
+
 Route::group(['middleware' => 'jwt.verify', 'prefix' => 'account'], function(){
     Route::get('/profil', [AccountController::class, 'apiProfil']);
     Route::get('/kasi', [AccountController::class, 'apiGetKasi']);
