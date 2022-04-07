@@ -63,6 +63,7 @@ class InventoryController extends Controller
                 [
                     'disposisi_to_kasi_by' => $user->id,
                     'disposisi_to_kasi_at' => Carbon::now('UTC'),
+                    'disposisi_to_kasi_note' => $request->note,
                     'progress' => 2
                 ]
             );
@@ -72,6 +73,7 @@ class InventoryController extends Controller
                 [
                     'disposisi_to_kasi_by' => $user->id,
                     'disposisi_to_kasi_at' => Carbon::now('UTC'),
+                    'disposisi_to_kasi_note' => $request->note,
                 ]
             );
         }
