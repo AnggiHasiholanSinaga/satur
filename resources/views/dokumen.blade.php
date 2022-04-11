@@ -54,7 +54,6 @@
                         <div class="card wizard-card" data-color="blue" id="wizard">
                             <form action="" method="">
                                 <!--        You can switch " data-color="blue" "  with one of the next bright colors: "green", "orange", "red", "purple"             -->
-
                                 <div class="wizard-header">
                                     <h3 class="wizard-title">
                                         Detail Surat Disposisi
@@ -70,13 +69,13 @@
 
                                     </ul>
                                 </div>
-
                                 <div class="tab-content">
                                     <div class="tab-pane" id="details">
                                         <div class="row">
                                             <div class="col-sm-12">
                                                 <h4 class="info-text"> Detail's</h4>
                                             </div>
+                                            <!-- detail -->
                                             <div class="col-sm-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">
@@ -146,7 +145,7 @@
                                                         <i class="material-icons">email</i>
                                                     </span>
                                                     <div class="form-group label-floating">
-                                                        <!-- <label class="control-label">{{$data['result']['implementation_place']}}</label> -->
+                                                        <label class="control-label">{{$data['result']['implementation_place']}}</label>
                                                         <input name="name" type="text" class="form-control" disabled
                                                             readonly>
                                                     </div>
@@ -185,8 +184,10 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <!-- end Detail -->
                                     <div class="tab-pane" id="captain">
                                         <h4 class="info-text">Disposisi Ke Kasi </h4>
+                                        <!-- kasi section -->
                                         <div class="row">
                                             <div class="col-sm-6">
                                                 <div class="input-group">
@@ -195,14 +196,14 @@
                                                     </span>
                                                     <div class="form-group label-floating">
                                                         <h3>Daftar Kasi</h3>
-                                                        <!-- <ul class="">
+                                                        <ul class="">
                                                             @foreach ($data['result']['kasi'] as $kasi)
                                                             <li class="">
                                                                 <p>{{$kasi['name']}}</p>
                                                                 <p>{{$kasi['position']['name']}}</p>
                                                             </li>
                                                             @endforeach
-                                                        </ul> -->
+                                                        </ul>
                                                     </div>
                                                 </div>
                                                 <div class="input-group">
@@ -211,7 +212,7 @@
                                                     </span>
                                                     <div class="form-group label-floating">
                                                         <label class="control-label">
-                                                            <!-- {{$data['result']['disposisi_to_kasi_by']['name']}}</label> -->
+                                                            {{$data['result']['disposisi_to_kasi_by']['name']}}</label>
                                                         <input name="name" type="text" class="form-control" disabled
                                                             readonly>
                                                     </div>
@@ -221,7 +222,7 @@
                                                         <i class="material-icons">email</i>
                                                     </span>
                                                     <div class="form-group label-floating">
-                                                        <!-- <label class="control-label">{{$data['result']['disposisi_to_kasi_at']}}</label> -->
+                                                        <label class="control-label">{{$data['result']['disposisi_to_kasi_at']}}</label>
                                                         <input name="name" type="text" class="form-control" disabled
                                                             readonly>
                                                     </div>
@@ -231,8 +232,10 @@
 
                                         </div>
                                     </div>
+                                    <!-- kasi end -->
                                     <div class="tab-pane" id="description">
                                         <h4 class="info-text">Disposisi Ke Staff </h4>
+                                        <!-- staff section -->
                                         <div class="row">
                                             <div class="col-sm-6">
                                                 <div class="input-group">
@@ -241,7 +244,7 @@
                                                     </span>
                                                     <div class="form-group label-floating">
                                                         <h3>Daftar Kasi</h3>
-                                                        <!-- <ul>
+                                                        <ul>
                                                         @foreach ($data['result']['staf'] as $staf)
                                                             <li class="">
                                                                 <p>{{$staf['name']}}</p>
@@ -249,7 +252,7 @@
                                                             </li>
                                                             @endforeach
 
-                                                        </ul> -->
+                                                        </ul>
                                                     </div>
                                                 </div>
 
@@ -258,9 +261,14 @@
                                                         <i class="material-icons">email</i>
                                                     </span>
                                                     <div class="form-group label-floating">
-                                                        <!-- <label class="control-label">{{$data['result']['disposisi_to_kasi_by']['name']}}</label> -->
+                                                        @if (empty($data['result']['disposisi_to_staf_by']['name']))
+                                                        <label class="control-label"></label>
+                                                        @else
+                                                        <label class="control-label">$data['result']['disposisi_to_staf_by']['name']</label>
+                                                        @endif
                                                         <input name="name" type="text" class="form-control" disabled
                                                             readonly>
+                                                        
                                                     </div>
                                                 </div>
                                                 <div class="input-group">
@@ -268,7 +276,7 @@
                                                         <i class="material-icons">email</i>
                                                     </span>
                                                     <div class="form-group label-floating">
-                                                        <!-- <label class="control-label">{{$data['result']['disposisi_to_staf_at']}}  -->
+                                                        <label class="control-label">{{$data['result']['disposisi_to_staf_at']}} 
 
                                                         </label>
                                                         <input name="name" type="text" class="form-control" disabled
@@ -280,14 +288,14 @@
 
                                         </div>
                                     </div>
+                                    <!-- staff end -->
                                     <div class="tab-pane" id="notulen">
                                         <h4 class="info-text">Notulen </h4>
-                                        <!-- <div class="form-floating">
+                                        <div class="form-floating">
                                             <textarea class="form-control" placeholder=""
                                                 id="floatingTextarea2" style="height: 100px" disabled
                                                 readonly>{{$data['result']['notulen']}} </textarea>
-
-                                        </div> -->
+                                        </div>
                                     </div>
                                     <div class="wizard-footer">
                                         <div class="pull-right">
