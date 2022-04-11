@@ -12,11 +12,15 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/dokumen/{id}','App\Http\Controllers\InfoController@dokumen');
 
-Route::get('/', function () {
+Route::get('/welcome', function () {
     return view('welcome');
 });
-
+// // Route::get('/dokumen', function () {
+// //     return view('dokumen');
+// // });
+// Route::get('/dokumen','InfoController@test');
 Route::get('/privacy-policy', function () {
     return view('privacypolicy');
 });
@@ -44,3 +48,4 @@ Route::get('/symlink', function() {
     Artisan::call('storage:link');
     return "symlink OK";
 });
+
