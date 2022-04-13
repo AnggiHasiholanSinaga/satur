@@ -73,7 +73,7 @@
                                     <div class="tab-pane" id="details">
                                         <div class="row">
                                             <div class="col-sm-12">
-                                                <h4 class="info-text"> Detail's</h4>
+                                                <h4 class="info-text"> Details</h4>
                                             </div>
                                             <!-- detail -->
                                             <div class="col-sm-6">
@@ -81,6 +81,7 @@
                                                     <span class="input-group-addon">
                                                         <i class="material-icons">email</i>
                                                     </span>
+                                                    <h5><strong>Status</strong></h5>
                                                     <div class="form-group label-floating">
                                                         
                                                         <label class="control-label">{{$data['result']['status']}}</label>
@@ -92,6 +93,7 @@
                                                     <span class="input-group-addon">
                                                         <i class="material-icons">email</i>
                                                     </span>
+                                                    <h5><strong>Tanggal Masuk</strong></h5>
                                                     <div class="form-group label-floating">
                                                         <label class="control-label">{{$data['result']['letter_date']}}</label>
                                                         <input name="name" type="text" class="form-control" disabled
@@ -102,6 +104,7 @@
                                                     <span class="input-group-addon">
                                                         <i class="material-icons">email</i>
                                                     </span>
+                                                    <h5><strong>Nomor Surat</strong></h5>
                                                     <div class="form-group label-floating">
                                                         <label class="control-label">{{$data['result']['no_letter']}}</label>
                                                         <input name="name" type="text" class="form-control" disabled
@@ -112,6 +115,7 @@
                                                     <span class="input-group-addon">
                                                         <i class="material-icons">email</i>
                                                     </span>
+                                                    <h5><strong>Nomor Agenda</strong></h5>
                                                     <div class="form-group label-floating">
                                                         <label class="control-label">{{$data['result']['no_agenda']}}</label>
                                                         <input name="name" type="text" class="form-control" disabled
@@ -124,6 +128,7 @@
                                                     <span class="input-group-addon">
                                                         <i class="material-icons">email</i>
                                                     </span>
+                                                    <h5><strong>Dari</strong></h5>
                                                     <div class="form-group label-floating">
                                                         <label class="control-label">{{$data['result']['from']}}</label>
                                                         <input name="name" type="text" class="form-control" disabled
@@ -134,6 +139,7 @@
                                                     <span class="input-group-addon">
                                                         <i class="material-icons">email</i>
                                                     </span>
+                                                    <h5><strong>Perihal</strong></h5>
                                                     <div class="form-group label-floating">
                                                         <label class="control-label">{{$data['result']['subject']}}</label>
                                                         <input name="name" type="text" class="form-control" disabled
@@ -144,6 +150,7 @@
                                                     <span class="input-group-addon">
                                                         <i class="material-icons">email</i>
                                                     </span>
+                                                    <h5><strong>Dilaksanakan Pada</strong></h5>
                                                     <div class="form-group label-floating">
                                                         <label class="control-label">{{$data['result']['implementation_place']}}</label>
                                                         <input name="name" type="text" class="form-control" disabled
@@ -154,13 +161,14 @@
                                                     <span class="input-group-addon">
                                                         <i class="material-icons">email</i>
                                                     </span>
+                                                    <h5><strong>Dilaksanakan Untuk</strong></h5>
                                                     <div class="form-group label-floating">
                                                         <label class="control-label">Dilaksanakan Untuk</label>
                                                         <input name="name" type="text" class="form-control" disabled
                                                             readonly>
                                                     </div>
                                                 </div>
-                                                <div class="">
+                                                <div class=""style="padding-left:50px">
                                                     <a href="https://docs.google.com/gview?embedded=true&url=https://saturnalia.jatengprov.go.id/{{$data['result']['file']}}" type="button" class="btn btn-info">Lihat PDF</a>
                                                     <a href="" type="button" class="btn btn-info"><svg
                                                             xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
@@ -206,10 +214,12 @@
                                                         </ul>
                                                     </div>
                                                 </div>
+                                                <br>
                                                 <div class="input-group">
                                                     <span class="input-group-addon">
                                                         <i class="material-icons">email</i>
                                                     </span>
+                                                    <h5><strong>Didispo Oleh</strong></h5>
                                                     <div class="form-group label-floating">
                                                         <label class="control-label">
                                                             {{$data['result']['disposisi_to_kasi_by']['name']}}</label>
@@ -221,15 +231,22 @@
                                                     <span class="input-group-addon">
                                                         <i class="material-icons">email</i>
                                                     </span>
+                                                    <h5><strong>Didispo Pada</strong></h5>
                                                     <div class="form-group label-floating">
                                                         <label class="control-label">{{$data['result']['disposisi_to_kasi_at']}}</label>
                                                         <input name="name" type="text" class="form-control" disabled
                                                             readonly>
                                                     </div>
                                                 </div>
-
                                             </div>
-
+                                            <div class="col-sm-6">
+                                                <div class="input-group">                                                            
+                                                    <div class="form-group">
+                                                        <h6><strong>Tentang Surat</strong></h6>                                                                                              
+                                                        <textarea class="form-control" id="FormControlTextArea1" rows="12" style="width:23em;"disabled readonly></textarea>    
+                                                    </div>                
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <!-- kasi end -->
@@ -251,15 +268,15 @@
                                                                 <p>{{$staf['position']['name']}}</p>
                                                             </li>
                                                             @endforeach
-
                                                         </ul>
                                                     </div>
                                                 </div>
-
+                                                <br>
                                                 <div class="input-group">
                                                     <span class="input-group-addon">
-                                                        <i class="material-icons">email</i>
+                                                        <i class="material-icons">email</i>                                                        
                                                     </span>
+                                                    <h5><strong>Didispo Oleh</strong></h5>
                                                     <div class="form-group label-floating">
                                                         @if (empty($data['result']['disposisi_to_staf_by']['name']))
                                                         <label class="control-label"></label>
@@ -268,24 +285,31 @@
                                                         @endif
                                                         <input name="name" type="text" class="form-control" disabled
                                                             readonly>
-                                                        
                                                     </div>
                                                 </div>
                                                 <div class="input-group">
                                                     <span class="input-group-addon">
                                                         <i class="material-icons">email</i>
                                                     </span>
+                                                    <h5><strong>Didispo Pada</strong></h5>
                                                     <div class="form-group label-floating">
                                                         <label class="control-label">{{$data['result']['disposisi_to_staf_at']}} 
-
                                                         </label>
                                                         <input name="name" type="text" class="form-control" disabled
                                                             readonly>
                                                     </div>
                                                 </div>
-
                                             </div>
-
+                                            <div class="col-sm-6">
+                                                <div class="input-group">
+                                                    <div class="form-group">                                                        
+                                                        <div class="form-group label-floating">
+                                                            <h6><strong>Tentang Surat</strong></h6>                                                                                              
+                                                            <textarea class="form-control" id="FormControlTextArea1" rows="12" style="width:23em;"disabled readonly></textarea>    
+                                                        </div>                
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <!-- staff end -->
